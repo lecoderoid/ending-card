@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #include<string.h>
 
-void printCard(char (*names)[10][100]){
+void printCard(char (*names)[10][9]){
   int first = 1;
   for(int i=0; i<10; i++){
     for(int j=0; j<10; j++){
@@ -19,7 +19,7 @@ void printCard(char (*names)[10][100]){
   printf("╋━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━╋\n");
 }
 
-void bet(char (*names)[10][100]){
+void bet(char (*names)[10][9]){
   char num[3];
   char name[9];
   int row, col;
@@ -40,8 +40,7 @@ void flush(){
   while((c = getchar()) != '\n' && c != EOF);
 }
 int main(){
-  int numberArr[10][10];
-char names[10][10][100] = {""};
+  char names[10][10][9] = {""};
   while(1){
     printf("\t\t\tGAME 2: NUGGETS VS HEAT\n\n");
     printCard(names);
