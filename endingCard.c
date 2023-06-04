@@ -2,6 +2,42 @@
 #include<stdlib.h>
 #include<string.h>
 
+void saveToFile(char (*names)[10][9]){
+  FILE *file = fopen("data.txt", "w");
+  if(file == NULL){
+    printf("Error opening file.\n");
+    return;
+  }
+  for(int i = 0; i < 10; i++){
+    for(int j = 0; j < 10; j++)
+      fprintf(file, "%s\n", names[i][j]);
+  }
+  fclose(file);
+}
+void readFromFile(char (*names)[10][9]){
+  FILE *file = fopen("data.txt", "r");
+  if(file == NULL) {
+    printf("Error opening file.\n");
+    return;
+  }
+
+  for(int i = 0; i < 10; i++){
+    for(int j=0; j < 10; j++){
+      if(fgets(names[i][j], 8, file) == NULL){
+        printf("Error reading from file.\n");
+        fclose(file);
+        return;
+      }
+      if(strcmp(names[i][j], "\n") == 0){
+        strcpy(names[i][j], "");
+      }
+      size_t len = strlen(names[i][j]);
+      if(len > 0 && names[i][j][len-1] == '\n') 
+        names[i][j][len-1] = '\0';
+    }
+  }
+  fclose(file);
+}
 void flush(){
   int c;
   while((c = getchar()) != '\n' && c != EOF);
@@ -40,14 +76,24 @@ void bet(char (*names)[10][9]){
   printf("%d - %d\n", row, col);
   printf("%s\n", names[row][col]);
 }
+void printArray(const char (*names)[10][9]){
+  for(int i = 0; i < 10; i++){
+    for(int j = 0; j < 10; j++)
+      printf("%d-%d: %s\n", i, j, names[i][j]);
+  }
+}
 int main(){
   char names[10][10][9] = {""};
   while(1){
     printf("\t\t\tGAME 2: NUGGETS VS HEAT\n\n");
+    readFromFile(names);
+    // printArray(names);
     printCard(names);
     bet(names);
     flush();
-    printCard(names);
-    system("clear");
+    saveToFile(names);
+    // printArray(names);
+    // printCard(names);
+    // system("clear");
   }
 }
