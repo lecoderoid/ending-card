@@ -2,6 +2,10 @@
 #include<stdlib.h>
 #include<string.h>
 
+void flush(){
+  int c;
+  while((c = getchar()) != '\n' && c != EOF);
+}
 void printCard(char (*names)[10][9]){
   int first = 1;
   for(int i=0; i<10; i++){
@@ -29,15 +33,12 @@ void bet(char (*names)[10][9]){
     row = (num[0] - '1') + 1;
     col = (num[1] - '1') + 1;
   }while(strcmp(names[row][col],"") != 0);
+  flush();
   printf("enter name: ");
   scanf("%8s", name);
   strcpy(names[row][col], name);
   printf("%d - %d\n", row, col);
   printf("%s\n", names[row][col]);
-}
-void flush(){
-  int c;
-  while((c = getchar()) != '\n' && c != EOF);
 }
 int main(){
   char names[10][10][9] = {""};
